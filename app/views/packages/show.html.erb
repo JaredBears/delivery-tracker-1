@@ -1,0 +1,131 @@
+<div>
+  <div>
+    <h1>
+      Package #<%= @the_package.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/packages">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_package/<%= @the_package.id %>">
+          Delete package
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Desc
+      </dt>
+      <dd>
+        <%= @the_package.desc %>
+      </dd>
+
+      <dt>
+        Expected
+      </dt>
+      <dd>
+        <%= @the_package.expected %>
+      </dd>
+
+      <dt>
+        Delivered
+      </dt>
+      <dd>
+        <%= @the_package.delivered %>
+      </dd>
+
+      <dt>
+        Owner
+      </dt>
+      <dd>
+        <%= @the_package.owner_id %>
+      </dd>
+
+      <dt>
+        Notes
+      </dt>
+      <dd>
+        <%= @the_package.notes %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_package.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_package.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit package
+    </h2>
+
+    <form action="/modify_package/<%= @the_package.id %>"  method="post" >
+      <div>
+        <label for="desc_box">
+          Desc
+        </label>
+
+        <textarea id="desc_box" name="query_desc"><%= @the_package.desc %></textarea>
+      </div>
+
+      <div>
+        <label for="expected_box">
+          Expected
+        </label>
+
+        <input type="date" id="expected_box" name="query_expected" value="<%= @the_package.expected %>">
+      </div>
+
+      <div>
+        <input type="checkbox" id="delivered_box" name="query_delivered" value="1" <%= "checked" if @the_package.delivered %>>
+
+        <label for="delivered_box">
+            Delivered
+        </label>
+      </div>
+
+      <div>
+        <label for="owner_id_box">
+          Owner
+        </label>
+
+        <input type="text" id="owner_id_box" name="query_owner_id" value="<%= @the_package.owner_id %>">
+      </div>
+
+      <div>
+        <label for="notes_box">
+          Notes
+        </label>
+
+        <textarea id="notes_box" name="query_notes"><%= @the_package.notes %></textarea>
+      </div>
+
+      <button>
+        Update package
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
