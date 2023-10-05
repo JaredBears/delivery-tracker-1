@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   
   # UPDATE
   
-  post("/modify_package/:path_id", { :controller => "packages", :action => "update" })
+  post("/modify_package/", { :controller => "packages", :action => "update" })
   
   # DELETE
   get("/delete_package/:path_id", { :controller => "packages", :action => "destroy" })

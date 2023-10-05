@@ -1,8 +1,11 @@
 <div>
   <div>
     <h1>
-      List of all packages
+      Delivery Tracker
     </h1>
+    <p>
+      Know if something gets lost in the mail
+    </p>
   </div>
 </div>
 
@@ -11,13 +14,13 @@
 <div>
   <div>
     <h2>
-      Add a new package
+      Expecting a Package?
     </h2>
 
     <form action="/insert_package" method="post">
       <div>
         <label for="desc_box">
-          Desc
+          Description
         </label>
 
         <textarea id="desc_box" name="query_desc" rows="3"></textarea>
@@ -25,124 +28,76 @@
 
       <div>
         <label for="expected_box">
-          Expected
+          Supposed to Arrive on
         </label>
 
         <input type="date" id="expected_box" name="query_expected">
       </div>
 
       <div>
-        <input type="checkbox" id="delivered_box" name="query_delivered" value="1">
-
-        <label for="delivered_box">Delivered</label>
-      </div>
-
-      <div>
-        <label for="owner_id_box">
-          Owner
-        </label>
-
-        <input type="text" id="owner_id_box" name="query_owner_id">
-      </div>
-
-      <div>
         <label for="notes_box">
-          Notes
+          Details
         </label>
 
         <textarea id="notes_box" name="query_notes" rows="3"></textarea>
       </div>
 
       <button>
-        Create package
+        Log delivery
       </button>
     </form>
   </div>
 </div>
 
 <hr>
+
 <div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Desc
-        </th>
-
-        <th>
-          Expected
-        </th>
-
-        <th>
-          Delivered
-        </th>
-
-        <th>
-          Owner
-        </th>
-
-        <th>
-          Notes
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_packages.each do |a_package| %>
-      <tr>
-        <td>
-          <%= a_package.id %>
-        </td>
-
-        <td>
-          <%= a_package.desc %>
-        </td>
-
-        <td>
-          <%= a_package.expected %>
-        </td>
-
-        <td>
-          <%= a_package.delivered %>
-        </td>
-
-        <td>
-          <%= a_package.owner_id %>
-        </td>
-
-        <td>
-          <%= a_package.notes %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_package.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_package.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/packages/<%= a_package.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
+  <h2>
+    Waiting On
+  </h2>
+  <ul>
+    <% @missing_packages.each do |package| %>
+      <li>
+        <div>
+          <h3>
+            <%= package.desc %>
+          </h3>
+          <p>
+            Supposed to arrive on <%= package.expected.strftime("%A, %B %d, %Y") %>
+          </p>
+          <p>
+            <%= package.notes %>
+          </p>
+          <p>
+            <form action="/modify_package" method="post">
+              <input type="hidden" name="query_id" value="<%= package.id %>">
+              <input type="hidden" name="query_delivered" value="true" >
+              <button type="submit">
+                Mark as Received
+              </button>
+            </form>
+          </p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
 </div>
-
-<hr>
+<div>
+  <h2>
+    Received
+  </h2>
+  <ul>
+    <% @received_packages.each do |package| %>
+      <li>
+        <div>
+          <h3>
+            <%= package.desc %>
+          </h3>
+          <p>
+            Updated about <%= distance_of_time_in_words_to_now(package.updated_at) %> ago. <a href="/delete_package/<%= package.id %>">Delete</a>
+          </p>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -23,6 +23,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :packages, foreign_key: :owner_id, dependent: :destroy
-  has_many :received_packages, -> {where(delivered: true)}
-  has_many :missing_packages, -> {where(delivered: false)}
+  has_many :received_packages, -> { received }, class_name: 'Package', foreign_key: :owner_id
+  has_many :missing_packages, -> { missing }, class_name: 'Package', foreign_key: :owner_id
 end

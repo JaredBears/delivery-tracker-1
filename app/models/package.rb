@@ -21,6 +21,6 @@
 #
 class Package < ApplicationRecord
   belongs_to :owner, class_name: 'User'
-  scope :missing_packages, -> { where(delivered: false) }
-  scope :delivered_packages, -> { where(delivered: true) }
+  scope :missing, -> { where(delivered: false) }
+  scope :received, -> { where(delivered: true) }
 end
