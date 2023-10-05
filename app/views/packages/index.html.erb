@@ -14,24 +14,23 @@
 <div>
   <div>
     <h2>
-      Expecting a Package?
+      Expecting a package?
     </h2>
 
     <form action="/insert_package" method="post">
       <div>
-        <label for="desc_box">
+        <label for="description_box">
           Description
         </label>
-
-        <textarea id="desc_box" name="query_desc" rows="3"></textarea>
+        <input type="text" id="description_box" name="query_desc">
       </div>
 
       <div>
-        <label for="expected_box">
-          Supposed to Arrive on
+        <label for="supposed_to_arrive_on_box">
+          Supposed to arrive on
         </label>
 
-        <input type="date" id="expected_box" name="query_expected">
+        <input type="date" id="supposed_to_arrive_on_box" name="query_expected">
       </div>
 
       <div>
@@ -51,9 +50,9 @@
 
 <hr>
 
-<div>
+<div class="waiting_on" >
   <h2>
-    Waiting On
+    Waiting on
   </h2>
   <ul>
     <% @missing_packages.each do |package| %>
@@ -63,7 +62,7 @@
             <%= package.desc %>
           </h3>
           <p>
-            Supposed to arrive on <%= package.expected.strftime("%A, %B %d, %Y") %>
+            Supposed to arrive on <%= package.expected.strftime("%Y-%m-%d") %>
           </p>
           <p>
             <%= package.notes %>
@@ -73,7 +72,7 @@
               <input type="hidden" name="query_id" value="<%= package.id %>">
               <input type="hidden" name="query_delivered" value="true" >
               <button type="submit">
-                Mark as Received
+                Mark as received
               </button>
             </form>
           </p>
@@ -82,7 +81,7 @@
     <% end %>
   </ul>
 </div>
-<div>
+<div class="received">
   <h2>
     Received
   </h2>
